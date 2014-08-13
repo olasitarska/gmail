@@ -18,8 +18,8 @@ class Message():
         self.headers = {}
 
         self.subject = None
-        self.body = None
-        self.html = None
+        self.body = ''
+        self.html = ''
 
         self.to = None
         self.fr = None
@@ -149,9 +149,9 @@ class Message():
         if self.message.get_content_maintype() == "multipart":
             for content in self.message.walk():
                 if content.get_content_type() == "text/plain":
-                    self.body = content.get_payload(decode=True)
+                    self.body += content.get_payload(decode=True)
                 elif content.get_content_type() == "text/html":
-                    self.html = content.get_payload(decode=True)
+                    self.html += content.get_payload(decode=True)
         elif self.message.get_content_maintype() == "text":
             self.body = self.message.get_payload()
 
